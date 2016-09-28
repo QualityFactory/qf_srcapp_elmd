@@ -5,6 +5,6 @@ addons:
   sonarqube: true
 env:
   global:
-    - secure: ********* # defines SONAR_TOKEN=1acfbafac63833951c492ae3e68909dbd8928e2c
+    - secure: ********* 
 script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.login=$SONAR_TOKEN
