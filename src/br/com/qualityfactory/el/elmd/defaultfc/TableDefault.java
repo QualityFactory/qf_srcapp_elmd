@@ -7,8 +7,6 @@ public abstract class TableDefault implements TableDefaultFacade {
 
 	@Override
 	public List<Model> obterTodos(Model model) {
-		return new ArrayList<Model>();
-		//return ;
+		return new ArrayList<>();
 	}
-
 }
