@@ -8,7 +8,7 @@ import br.com.qualityfactory.el.elmd.defaultfc.Model;
  *
  */
 abstract class ModelDefault implements Model {
-
+	
 	private Integer id;
 	private String code;
 

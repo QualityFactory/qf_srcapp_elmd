@@ -9,24 +9,25 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import br.com.qualityfactory.el.elmd.defaultfc.Model;
+import br.com.qualityfactory.el.elmd.ejb.util.TestUtil;
 import br.com.qualityfactory.el.elmd.model.VerbModel;
 import br.com.qualityfactory.el.elmd.verb.Verb;
 import br.com.qualityfactory.el.elmd.verb.VerbImpl;
 
 public class VerbImplTest {
 
-	@InjectMocks
-	private Verb verb = Mockito.mock(VerbImpl.class);
-	private Model model = Mockito.mock(VerbModel.class);
+	private Verb verb;
+	private Model model;
 
 	@Before
 	public void init() {
-		MockitoAnnotations.initMocks(this);
+		//TestUtil.initTest(this);
+		verb = new VerbImpl();
+		model = new VerbModel();
 	}
 
 	@Test
-	public void testObterTodos() {
-
+	public void testGetAllVerbs() {
 		if (verb.obterTodos(model).isEmpty()) {
 			fail("O método não obteve nenhum resultado.");
 		}
