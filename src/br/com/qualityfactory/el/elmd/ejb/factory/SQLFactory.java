@@ -43,7 +43,7 @@ public class SQLFactory {
 	
 	private static EntityManager getManager(){
 		if (manager == null){
-			manager = Persistence.createEntityManagerFactory(NegocioConstantes.PERSISTENCE_UNIT).createEntityManager();
+			manager = Persistence.createEntityManagerFactory(NegocioConstantes.PERSISTENCE_UNIT_TEST).createEntityManager();
 		}
 		
 		return manager;
