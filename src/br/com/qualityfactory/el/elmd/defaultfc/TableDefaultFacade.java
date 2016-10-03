@@ -1,5 +1,6 @@
 package br.com.qualityfactory.el.elmd.defaultfc;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface TableDefaultFacade {
@@ -8,5 +9,5 @@ public interface TableDefaultFacade {
 	 * @param model Objeto que representa a tabela no banco de dados, a consulta pode ser parametrizada
 	 * @return Retorna a listagem de 
 	 */
-	public List<Model> obterTodos(Model model);
+	public Collection<Model> obterTodos(Model model);
 }

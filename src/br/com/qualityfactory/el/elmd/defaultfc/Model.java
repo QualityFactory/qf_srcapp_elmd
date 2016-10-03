@@ -2,9 +2,9 @@ package br.com.qualityfactory.el.elmd.defaultfc;
 
 public interface Model {
 	
-	public Integer getId();
+	public Short getId();
 	
-	public void setId(Integer id);
+	public void setId(Short id);
 	
 	public String getCode();
 	

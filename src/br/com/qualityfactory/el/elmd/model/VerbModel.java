@@ -6,16 +6,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.Type;
+
 import br.com.qualityfactory.el.elmd.defaultfc.Model;
 import lombok.Data;
 
 @Data
 @Entity(name = "verb") 
-public class VerbModel extends ModelDefault implements Model{
+public class VerbModel implements Model {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Short id;
+	
+	@Column(nullable = false, unique = true)
+	private String code;
 	
 	@Column(name = "val", nullable = false, unique = true)
 	private String value;

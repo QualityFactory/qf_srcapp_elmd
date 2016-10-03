@@ -1,13 +1,13 @@
 package br.com.qualityfactory.el.elmd.defaultfc;
 
-import java.util.List;
+import java.util.Collection;
 
-import br.com.qualityfactory.el.elmd.ejb.factory.DBFactory;
+import br.com.qualityfactory.el.elmd.ejb.factory.SQLFactory;
 
 public abstract class TableDefaultImpl implements TableDefaultFacade {
 
 	@Override
-	public List<Model> obterTodos(Model model) {
-		return DBFactory.getDataTable(model);
+	public Collection<Model> obterTodos(Model model) {
+		return SQLFactory.getDataTable(model);
 	}
 }
