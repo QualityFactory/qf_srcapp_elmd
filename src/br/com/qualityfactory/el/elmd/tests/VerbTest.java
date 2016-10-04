@@ -1,4 +1,4 @@
-package br.com.qualityfactory.el.elmd.test.verb;
+package br.com.qualityfactory.el.elmd.tests;
 
 import static org.junit.Assert.fail;
 
@@ -14,7 +14,7 @@ import br.com.qualityfactory.el.elmd.model.VerbModel;
 import br.com.qualityfactory.el.elmd.verb.Verb;
 import br.com.qualityfactory.el.elmd.verb.VerbImpl;
 
-public class VerbImplTest {
+public class VerbTest {
 
 	private Verb verb;
 	private Model model;

@@ -6,8 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.hibernate.annotations.Type;
-
 import br.com.qualityfactory.el.elmd.defaultfc.Model;
 import lombok.Data;
 
