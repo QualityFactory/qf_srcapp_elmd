@@ -98,6 +98,11 @@ public class CodesTableTest {
 		((CodesTableModel)model).setTableName("rule");
 		lsCodesTable.add(model);
 		
+		Model model2 = new CodesTableModel();
+		model2.setCode("\\x0002");
+		((CodesTableModel)model2).setTableName("rule");
+		lsCodesTable.add(model2);
+		
 		return lsCodesTable;
 	}
 }
