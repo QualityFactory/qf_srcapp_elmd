@@ -12,7 +12,7 @@ import br.com.qualityfactory.el.elmd.defaultfc.Model;
 import br.com.qualityfactory.el.elmd.model.CodesTableModel;
 import junit.framework.Assert;
 
-public class CodesTableTest {
+public class CodesTableTest implements TestDefault {
 	private CodesTable codesTable;
 	private Model model;
 	private List<Model> models;
@@ -33,7 +33,7 @@ public class CodesTableTest {
 	 */
 	@Test
 	public void getAll() {
-		Assert.assertEquals(33, models.size());
+		TestDefault.super.getAll(codesTable, model);
 	}
 	
 	/**
@@ -104,5 +104,10 @@ public class CodesTableTest {
 		lsCodesTable.add(model2);
 		
 		return lsCodesTable;
+	}
+
+	@Override
+	public Integer getNumRecords() {
+		return 33;
 	}
 }

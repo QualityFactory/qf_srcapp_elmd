@@ -3,7 +3,6 @@ package br.com.qualityfactory.el.elmd.tests;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.junit.Before;
@@ -14,7 +13,7 @@ import br.com.qualityfactory.el.elmd.model.VerbModel;
 import br.com.qualityfactory.el.elmd.verb.Verb;
 import br.com.qualityfactory.el.elmd.verb.VerbImpl;
 
-public class VerbTest {
+public class VerbTest implements TestDefault{
 
 	private Verb verb;
 	private Model model;
@@ -26,12 +25,8 @@ public class VerbTest {
 	}
 
 	@Test
-	public void testGetAllVerbs() {
-		Collection<Model> verbs = verb.obterTodos(model);
-
-		if (verbs == null || verbs.size() != 3) {
-			fail("A consulta não obteve nenhum resultado.");
-		}
+	public void getAll() {
+		TestDefault.super.getAll(verb, model);
 	}
 
 	/**
@@ -125,5 +120,10 @@ public class VerbTest {
 		lsCodes.add("\\x72");
 		
 		return lsCodes;
+	}
+
+	@Override
+	public Integer getNumRecords() {
+		return 3;
 	}
 }
