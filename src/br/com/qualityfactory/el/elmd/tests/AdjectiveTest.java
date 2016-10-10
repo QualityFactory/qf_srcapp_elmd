@@ -11,6 +11,7 @@ import br.com.qualityfactory.el.elmd.adjective.Adjective;
 import br.com.qualityfactory.el.elmd.adjective.AdjectiveImpl;
 import br.com.qualityfactory.el.elmd.defaultfc.Model;
 import br.com.qualityfactory.el.elmd.enums.EnumNameField;
+import br.com.qualityfactory.el.elmd.exceptions.NotFoundColumnException;
 import br.com.qualityfactory.el.elmd.model.AdjectiveModel;
 import br.com.qualityfactory.el.elmd.sheet.AdjectiveSheet;
 import br.com.qualityfactory.el.elmd.sheet.ProcTemplate;
@@ -28,19 +29,13 @@ public class AdjectiveTest implements TestDefault {
 		sheet = new AdjectiveSheet();
 	}
 
-	@Test
 	public void getAll() throws IOException {
 		TestDefault.super.getAll(adjective, model);
 	}
 	
 	@Test
-	public void validateCode() throws IllegalArgumentException, IllegalAccessException, IOException {
-		ProcTemplate.getFieldSheet(sheet, EnumNameField.CODE);
-		
-		//List<String> lsCodes = new ArrayList<>();
-		//lsCodes.add("\\x0100");
-		
-		//TestDefault.super.validateFieldTable(adjective, model, EnumNameField.CODE, lsCodes);
+	public void validateCode() throws IllegalArgumentException, IllegalAccessException, IOException, NotFoundColumnException {
+		TestDefault.super.validateFieldTable(adjective, model, EnumNameField.CODE, ProcTemplate.getFieldSheet(sheet, EnumNameField.CODE));
 	}
 	
 	
