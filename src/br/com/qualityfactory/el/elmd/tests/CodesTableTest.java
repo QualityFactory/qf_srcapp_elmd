@@ -1,5 +1,6 @@
 package br.com.qualityfactory.el.elmd.tests;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +31,10 @@ public class CodesTableTest implements TestDefault {
 	
 	/**
 	 * Valida a quantidade de registros que foram persistidos no banco
+	 * @throws IOException 
 	 */
 	@Test
-	public void getAll() {
+	public void getAll() throws IOException {
 		TestDefault.super.getAll(codesTable, model);
 	}
 	

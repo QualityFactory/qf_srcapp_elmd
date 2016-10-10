@@ -2,6 +2,7 @@ package br.com.qualityfactory.el.elmd.tests;
 
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class VerbTest implements TestDefault{
 	}
 
 	@Test
-	public void getAll() {
+	public void getAll() throws IOException {
 		TestDefault.super.getAll(verb, model);
 	}
 
