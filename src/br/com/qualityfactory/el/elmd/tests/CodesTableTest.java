@@ -1,7 +1,6 @@
 package br.com.qualityfactory.el.elmd.tests;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +18,6 @@ import br.com.qualityfactory.el.elmd.sheet.SheetDefault;
 public class CodesTableTest implements TestDefault {
 	private CodesTable codesTable;
 	private Model model;
-	private List<Model> models;
 	private SheetDefault sheet;
 	
 	/**
@@ -47,9 +45,14 @@ public class CodesTableTest implements TestDefault {
 	public void validateCode() throws IllegalArgumentException, IllegalAccessException, NotFoundColumnException, IOException {
 		TestDefault.super.validateFieldTable(codesTable, model, EnumNameField.CODE, ProcTemplate.getFieldSheet(sheet, EnumNameField.CODE));
 	}
+	
+	@Test
+	public void validateNameTable() throws IllegalArgumentException, IllegalAccessException, NotFoundColumnException, IOException {
+		TestDefault.super.validateFieldTable(codesTable, model, EnumNameField.NAME, ProcTemplate.getFieldSheet(sheet, EnumNameField.NAME));
+	}
 
 	@Override
 	public Integer getNumRecords() throws IOException {
-		return ProcTemplate.getSheet(sheet).getLastRowNum();
+		return ProcTemplate.getCountRows(sheet);
 	}
 }

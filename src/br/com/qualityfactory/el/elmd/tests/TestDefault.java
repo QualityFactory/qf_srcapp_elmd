@@ -24,40 +24,6 @@ public interface TestDefault {
 	}
 	
 	/**
-	 * Verifica se o código informado está persistido corretamente no banco de dados 
-	 * @param table Implementação do facade que disponibilizará a consulta com o banco 
-	 * @param modelImpl Implementação do model mapeado com a tabela no banco de dados
-	 * @param values Valores que devem existir no banco de dados
-	 * 
-	 */
-	public default void validateCodeTable(TableDefault table, Model modelImpl, List<String> values) throws NoSuchMethodException, SecurityException {
-		Collection<Model> models = table.obterTodos(modelImpl);
-		
-		modelCode:
-		for (Model model: models){			
-			String valueNotFound = "";
-					
-			for (String value: values) {
-				if (model.getCode().equals(value)){
-					continue modelCode;
-				}
-				
-				valueNotFound = value;
-			}
-			
-			Assert.fail("O valor " + valueNotFound + " não foi encontrado na base de dados.");
-		}
-	}
-	
-	/**
-	 * Verifica se o código informado está persistido corretamente no banco de dados 
-	 * @param table Implementação do facade que disponibilizará a consulta com o banco 
-	 * @param modelImpl Implementação do model mapeado com a tabela no banco de dados
-	 * @param values Valores que devem existir no banco de dados
-	 * 
-	 */
-	
-	/**
 	 * Verifica se o campo informado está persistido corretamente no banco de dados
 	 * @param table
 	 * @param modelImpl
@@ -82,18 +48,13 @@ public interface TestDefault {
 				}
 			}
 			
-			String valueNotFound = "";
-			
 			for (String value: values) {
-				if (fieldValue.equals(value)){
+				if (fieldValue.equalsIgnoreCase(value)){
 					continue modelList;
 				}
-				
-				valueNotFound = value;
-				break;
 			}
 			
-			Assert.fail("O valor " + valueNotFound + " não foi encontrado na base de dados.");
+			Assert.fail("O valor " + fieldValue + " não foi encontrado na base de dados.");
 		}
 	}
 	

@@ -41,26 +41,25 @@ public class ProcTemplate {
 	 */
 	public static List<String> getFieldSheet(SheetDefault pSheet, EnumNameField nameField) throws IllegalArgumentException, IllegalAccessException, IOException, NotFoundColumnException {		
 		List<String> lsField = new ArrayList<>();
-		XSSFSheet sheet = getSheet(pSheet);
+		XSSFSheet sheet = ProcTemplate.getSheet(pSheet);
 		
-		Integer numCellField = identifyColumnField(sheet.iterator(), nameField);
+		Integer numCellField = ProcTemplate.identifyColumnField(sheet.iterator(), nameField);
 		
 		Iterator<Row> rows = sheet.iterator();
 		
 		while(rows.hasNext()){
 			Row row = rows.next();
+			Cell activeCell = row.getCell(numCellField); 
 			
-			if ((row.getCell(numCellField).getCellType() == Cell.CELL_TYPE_BLANK) || (row.getCell(numCellField).getCellType() == Cell.CELL_TYPE_STRING &&  
-					row.getCell(numCellField).getStringCellValue().equals(nameField.getDescricao()))) {
+			if (activeCell == null || activeCell.getCellType() == Cell.CELL_TYPE_BLANK || (activeCell.getCellType() == Cell.CELL_TYPE_STRING &&  
+					activeCell.getStringCellValue().equals(nameField.getDescricao()))) {
 				continue;
 			}
 			
-			if ((row.getCell(numCellField).getCellType() == Cell.CELL_TYPE_NUMERIC) && (nameField.name().equals(EnumNameField.CODE.name()))){
-				lsField.add(getNumHex(row.getCell(numCellField).getNumericCellValue()));
-			}
-			
-			if ((row.getCell(numCellField).getCellType() == Cell.CELL_TYPE_STRING && (nameField.name().equals(EnumNameField.VALUE.name())))){
-				lsField.add(row.getCell(numCellField).getStringCellValue());
+			if (nameField.name().equals(EnumNameField.CODE.name())) {
+				lsField.add(getNumHex(activeCell.getStringCellValue()));
+			} else {
+				lsField.add(activeCell.getStringCellValue());
 			}
 		}
 		
@@ -83,20 +82,46 @@ public class ProcTemplate {
 		throw new NotFoundColumnException("Não foi possível encontrar a coluna especificada - " + nameField.getDescricao());
 	}
 	
-	private static String getNumHex(Double number){
-		String numHex = String.valueOf(number.intValue());
+	private static String getNumHex(String hex) {
 		String format = "\\x";
 		String numHexInit = "";
-		
-		if (numHex.length() == 1) {
+
+		if (hex.length() == 1) {
 			numHexInit = "000";
-		} else if (numHex.length() == 2) {
+		} else if (hex.length() == 2) {
 			numHexInit = "00";
-		} else if (numHex.length() == 3) {
+		} else if (hex.length() == 3) {
 			numHexInit = "0";
 		}
+
+		return format.concat(numHexInit).concat(hex);
+	}
+	
+	/**
+	 * Método necessário para validar a quantidade de registros existentes na planilha
+	 * @param pSheet
+	 * @return
+	 * @throws IOException
+	 */
+	public static int getCountRows(SheetDefault pSheet) throws IOException {
+		XSSFSheet sheet = ProcTemplate.getSheet(pSheet);
+		Iterator<Row> rows = sheet.iterator();
 		
-		return format.concat(numHexInit).concat(numHex);
+		int countRow = 0;
+		
+		while (rows.hasNext()) {
+			Row row = rows.next();
+			Cell activeCell = row.getCell(row.getFirstCellNum()); 
+			
+			if ((activeCell.getCellType() == Cell.CELL_TYPE_BLANK) || 
+					(activeCell.getCellType() == Cell.CELL_TYPE_STRING && activeCell.getStringCellValue().equals(EnumNameField.CODE.getDescricao()))) {
+				continue;
+			}
+			
+			++countRow;
+		}
+		
+		return countRow;
 	}
 	
 	
