@@ -1,8 +1,6 @@
 package br.com.qualityfactory.el.elmd.tests;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +22,7 @@ public class AdjectiveTest implements TestDefault {
 
 	@Before
 	public void init() {
-		adjective = new AdjectiveImpl();
+		adjective = new AdjectiveImpl();	
 		model = new AdjectiveModel();
 		sheet = new AdjectiveSheet();
 	}
@@ -38,12 +36,9 @@ public class AdjectiveTest implements TestDefault {
 		TestDefault.super.validateFieldTable(adjective, model, EnumNameField.CODE, ProcTemplate.getFieldSheet(sheet, EnumNameField.CODE));
 	}
 	
-	
-	public void validateValue() throws IllegalArgumentException, IllegalAccessException {
-		List<String> lsValues = new ArrayList<>();
-		lsValues.add("quick");
-
-		TestDefault.super.validateFieldTable(adjective, model, EnumNameField.VALUE, lsValues);
+	@Test
+	public void validateValue() throws IllegalArgumentException, IllegalAccessException, NotFoundColumnException, IOException {
+		TestDefault.super.validateFieldTable(adjective, model, EnumNameField.VALUE, ProcTemplate.getFieldSheet(sheet, EnumNameField.VALUE));
 	}
 
 	@Override

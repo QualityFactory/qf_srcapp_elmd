@@ -1,7 +1,6 @@
 package br.com.qualityfactory.el.elmd.tests;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -10,13 +9,18 @@ import org.junit.Test;
 import br.com.qualityfactory.el.elmd.codest.CodesTable;
 import br.com.qualityfactory.el.elmd.codest.CodesTableImpl;
 import br.com.qualityfactory.el.elmd.defaultfc.Model;
+import br.com.qualityfactory.el.elmd.enums.EnumNameField;
+import br.com.qualityfactory.el.elmd.exceptions.NotFoundColumnException;
 import br.com.qualityfactory.el.elmd.model.CodesTableModel;
-import junit.framework.Assert;
+import br.com.qualityfactory.el.elmd.sheet.CodestSheet;
+import br.com.qualityfactory.el.elmd.sheet.ProcTemplate;
+import br.com.qualityfactory.el.elmd.sheet.SheetDefault;
 
 public class CodesTableTest implements TestDefault {
 	private CodesTable codesTable;
 	private Model model;
 	private List<Model> models;
+	private SheetDefault sheet;
 	
 	/**
 	 * Inicializa o teste obtendo todos os registros no banco
@@ -25,11 +29,12 @@ public class CodesTableTest implements TestDefault {
 	public void init(){
 		codesTable = new CodesTableImpl();
 		model = new CodesTableModel();
+		sheet = new CodestSheet();
 		
-		models = (List<Model>) codesTable.obterTodos(model);			
 	}
 	
 	/**
+	 * 
 	 * Valida a quantidade de registros que foram persistidos no banco
 	 * @throws IOException 
 	 */
@@ -37,79 +42,14 @@ public class CodesTableTest implements TestDefault {
 	public void getAll() throws IOException {
 		TestDefault.super.getAll(codesTable, model);
 	}
-	
-	/**
-	 * Valida os códes na tabela codest no banco de dados 
-	 */
+
 	@Test
-	public void validateCodesPersist() {
-		modelLoop:
-		for (Model model : getAllCodesTable()) {
-			for (Model modelDB : models) {
-				if (modelDB.getCode().equals(model.getCode())){
-					continue modelLoop;
-				}
-			}
-			
-			Assert.fail("O registro " + model.getCode() + " não foi encontrado na base de dados.");
-		}
-	}
-	
-	/**
-	 * Valida se o nome da tabela informado na planilha foi persistido corretamente no banco de dados
-	 */
-	@Test
-	public void validateNamesTablesPersist() {
-		modelLoop:
-		for (Model model : getAllCodesTable()) {
-			CodesTableModel tableModelSheet = ((CodesTableModel)model);
-			for (Model modelDB : models) {
-				if (((CodesTableModel)modelDB).getTableName().equals(tableModelSheet.getTableName())){
-					continue modelLoop;
-				}
-			}
-			
-			Assert.fail("O registro " + tableModelSheet.getTableName() + " não foi encontrado na base de dados.");
-		}
-	}
-	
-	public void validateCodeNameLink() {
-		modelLoop:
-		for (Model model : getAllCodesTable()) {
-			CodesTableModel tableModelSheet = ((CodesTableModel)model);
-			for (Model modelDB : models) {
-				if (((CodesTableModel)modelDB).getTableName().equals(tableModelSheet.getTableName())){
-					continue modelLoop;
-				}
-			}
-			
-			Assert.fail("O registro " + tableModelSheet.getTableName() + " não foi encontrado na base de dados.");
-		}
-	}
-	
-	/**
-	 * Para fins de teste, informa os registros que devem estar presentes no banco, o ideal seria é recuperar os dados diretamente da planilha
-	 * 
-	 * @return
-	 */
-	private List<Model> getAllCodesTable(){
-		List<Model> lsCodesTable = new ArrayList<>();
-		
-		Model model = new CodesTableModel();
-		model.setCode("\\x0001");
-		((CodesTableModel)model).setTableName("rule");
-		lsCodesTable.add(model);
-		
-		Model model2 = new CodesTableModel();
-		model2.setCode("\\x0002");
-		((CodesTableModel)model2).setTableName("rule");
-		lsCodesTable.add(model2);
-		
-		return lsCodesTable;
+	public void validateCode() throws IllegalArgumentException, IllegalAccessException, NotFoundColumnException, IOException {
+		TestDefault.super.validateFieldTable(codesTable, model, EnumNameField.CODE, ProcTemplate.getFieldSheet(sheet, EnumNameField.CODE));
 	}
 
 	@Override
-	public Integer getNumRecords() {
-		return 33;
+	public Integer getNumRecords() throws IOException {
+		return ProcTemplate.getSheet(sheet).getLastRowNum();
 	}
 }

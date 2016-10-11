@@ -58,6 +58,10 @@ public class ProcTemplate {
 			if ((row.getCell(numCellField).getCellType() == Cell.CELL_TYPE_NUMERIC) && (nameField.name().equals(EnumNameField.CODE.name()))){
 				lsField.add(getNumHex(row.getCell(numCellField).getNumericCellValue()));
 			}
+			
+			if ((row.getCell(numCellField).getCellType() == Cell.CELL_TYPE_STRING && (nameField.name().equals(EnumNameField.VALUE.name())))){
+				lsField.add(row.getCell(numCellField).getStringCellValue());
+			}
 		}
 		
 		return lsField;
@@ -72,6 +76,8 @@ public class ProcTemplate {
 				if (row.getCell(i).getStringCellValue().equals(nameField.getDescricao())){
 					return i;
 				}
+			
+			break;
 		}
 		
 		throw new NotFoundColumnException("Não foi possível encontrar a coluna especificada - " + nameField.getDescricao());
