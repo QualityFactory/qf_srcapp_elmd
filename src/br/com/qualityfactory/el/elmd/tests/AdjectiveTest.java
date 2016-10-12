@@ -8,7 +8,8 @@ import org.junit.Test;
 import br.com.qualityfactory.el.elmd.adjective.Adjective;
 import br.com.qualityfactory.el.elmd.adjective.AdjectiveImpl;
 import br.com.qualityfactory.el.elmd.defaultfc.Model;
-import br.com.qualityfactory.el.elmd.enums.EnumNameField;
+import br.com.qualityfactory.el.elmd.enums.EnumNameFieldModel;
+import br.com.qualityfactory.el.elmd.enums.EnumNameFieldSheet;
 import br.com.qualityfactory.el.elmd.exceptions.NotFoundColumnException;
 import br.com.qualityfactory.el.elmd.model.AdjectiveModel;
 import br.com.qualityfactory.el.elmd.sheet.AdjectiveSheet;
@@ -33,12 +34,12 @@ public class AdjectiveTest implements TestDefault {
 	
 	@Test
 	public void validateCode() throws IllegalArgumentException, IllegalAccessException, IOException, NotFoundColumnException {
-		TestDefault.super.validateFieldTable(adjective, model, EnumNameField.CODE, ProcTemplate.getFieldSheet(sheet, EnumNameField.CODE));
+		TestDefault.super.validateFieldTable(adjective, model, EnumNameFieldModel.CODE, ProcTemplate.getFieldSheet(sheet, EnumNameFieldSheet.CODE));
 	}
 	
 	@Test
 	public void validateValue() throws IllegalArgumentException, IllegalAccessException, NotFoundColumnException, IOException {
-		TestDefault.super.validateFieldTable(adjective, model, EnumNameField.VALUE, ProcTemplate.getFieldSheet(sheet, EnumNameField.VALUE));
+		TestDefault.super.validateFieldTable(adjective, model, EnumNameFieldModel.VALUE, ProcTemplate.getFieldSheet(sheet, EnumNameFieldSheet.VALUE));
 	}
 
 	@Override
