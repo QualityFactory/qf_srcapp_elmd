@@ -10,7 +10,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import br.com.qualityfactory.el.elmd.enums.EnumNameField;
+import br.com.qualityfactory.el.elmd.enums.EnumNameFieldModel;
+import br.com.qualityfactory.el.elmd.enums.EnumNameFieldSheet;
 import br.com.qualityfactory.el.elmd.exceptions.NotFoundColumnException;
 
 public class ProcTemplate {
@@ -39,7 +40,7 @@ public class ProcTemplate {
 	 * @throws IOException
 	 * @throws NotFoundColumnException
 	 */
-	public static List<String> getFieldSheet(SheetDefault pSheet, EnumNameField nameField) throws IllegalArgumentException, IllegalAccessException, IOException, NotFoundColumnException {		
+	public static List<String> getFieldSheet(SheetDefault pSheet, EnumNameFieldSheet nameField) throws IllegalArgumentException, IllegalAccessException, IOException, NotFoundColumnException {		
 		List<String> lsField = new ArrayList<>();
 		XSSFSheet sheet = ProcTemplate.getSheet(pSheet);
 		
@@ -51,12 +52,16 @@ public class ProcTemplate {
 			Row row = rows.next();
 			Cell activeCell = row.getCell(numCellField); 
 			
-			if (activeCell == null || activeCell.getCellType() == Cell.CELL_TYPE_BLANK || (activeCell.getCellType() == Cell.CELL_TYPE_STRING &&  
-					activeCell.getStringCellValue().equals(nameField.getDescricao()))) {
+			//Fim das células com valor
+			if (activeCell == null) {
+				break;
+			}
+			
+			if (activeCell.getCellType() == Cell.CELL_TYPE_STRING &&  activeCell.getStringCellValue().equals(nameField.getDescricao())) {
 				continue;
 			}
 			
-			if (nameField.name().equals(EnumNameField.CODE.name())) {
+			if (nameField.name().equals(EnumNameFieldModel.CODE.name())) {
 				lsField.add(getNumHex(activeCell.getStringCellValue()));
 			} else {
 				lsField.add(activeCell.getStringCellValue());
@@ -67,7 +72,7 @@ public class ProcTemplate {
 				
 	}
 	
-	private static Integer identifyColumnField(Iterator<Row> rows, EnumNameField nameField) throws NotFoundColumnException {
+	private static Integer identifyColumnField(Iterator<Row> rows, EnumNameFieldSheet nameField) throws NotFoundColumnException {
 		while (rows.hasNext()){
 			Row row = rows.next();
 			
@@ -114,7 +119,7 @@ public class ProcTemplate {
 			Cell activeCell = row.getCell(row.getFirstCellNum()); 
 			
 			if ((activeCell.getCellType() == Cell.CELL_TYPE_BLANK) || 
-					(activeCell.getCellType() == Cell.CELL_TYPE_STRING && activeCell.getStringCellValue().equals(EnumNameField.CODE.getDescricao()))) {
+					(activeCell.getCellType() == Cell.CELL_TYPE_STRING && activeCell.getStringCellValue().equals(EnumNameFieldSheet.CODE.getDescricao()))) {
 				continue;
 			}
 			
