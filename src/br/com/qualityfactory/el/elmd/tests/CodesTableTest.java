@@ -8,7 +8,6 @@ import org.junit.Test;
 import br.com.qualityfactory.el.elmd.codest.CodesTable;
 import br.com.qualityfactory.el.elmd.codest.CodesTableImpl;
 import br.com.qualityfactory.el.elmd.defaultfc.Model;
-import br.com.qualityfactory.el.elmd.enums.EnumNameField;
 import br.com.qualityfactory.el.elmd.exceptions.NotFoundColumnException;
 import br.com.qualityfactory.el.elmd.model.CodesTableModel;
 import br.com.qualityfactory.el.elmd.sheet.CodestSheet;
@@ -28,7 +27,6 @@ public class CodesTableTest implements TestDefault {
 		codesTable = new CodesTableImpl();
 		model = new CodesTableModel();
 		sheet = new CodestSheet();
-		
 	}
 	
 	/**
@@ -43,12 +41,12 @@ public class CodesTableTest implements TestDefault {
 
 	@Test
 	public void validateCode() throws IllegalArgumentException, IllegalAccessException, NotFoundColumnException, IOException {
-		TestDefault.super.validateFieldTable(codesTable, model, EnumNameField.CODE, ProcTemplate.getFieldSheet(sheet, EnumNameField.CODE));
+		TestDefault.super.validateCode(codesTable, model, sheet);
 	}
 	
 	@Test
 	public void validateNameTable() throws IllegalArgumentException, IllegalAccessException, NotFoundColumnException, IOException {
-		TestDefault.super.validateFieldTable(codesTable, model, EnumNameField.NAME, ProcTemplate.getFieldSheet(sheet, EnumNameField.NAME));
+		TestDefault.super.validateName(codesTable, model, sheet);
 	}
 
 	@Override
