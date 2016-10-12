@@ -7,7 +7,11 @@ import java.util.List;
 
 import br.com.qualityfactory.el.elmd.defaultfc.Model;
 import br.com.qualityfactory.el.elmd.defaultfc.TableDefault;
-import br.com.qualityfactory.el.elmd.enums.EnumNameField;
+import br.com.qualityfactory.el.elmd.enums.EnumNameFieldModel;
+import br.com.qualityfactory.el.elmd.enums.EnumNameFieldSheet;
+import br.com.qualityfactory.el.elmd.exceptions.NotFoundColumnException;
+import br.com.qualityfactory.el.elmd.sheet.ProcTemplate;
+import br.com.qualityfactory.el.elmd.sheet.SheetDefault;
 import junit.framework.Assert;
 
 public interface TestDefault {
@@ -31,31 +35,76 @@ public interface TestDefault {
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
 	 */
-	public default void validateFieldTable(TableDefault table, Model modelImpl, EnumNameField nameField, List<String> values) throws IllegalArgumentException, IllegalAccessException {
+	 default void validateFieldTable(TableDefault table, Model modelImpl, EnumNameFieldModel nameField, List<String> values) throws IllegalArgumentException, IllegalAccessException {
 		Collection<Model> models = table.obterTodos(modelImpl);
 		
-		modelList:
-		for (Model model: models) {
-			String fieldValue = "";
-			
-			for (Field field : model.getClass().getDeclaredFields()) {
-				if (field.getName().equalsIgnoreCase(nameField.name())) {		
-					field.setAccessible(true);
-					fieldValue = field.get(model).toString();					
-					field.setAccessible(false);
-					
-					break;
+		sheetList:
+		for (String value: values) {
+			for (Model model: models) {
+				String fieldValue = "";
+				for (Field field : model.getClass().getDeclaredFields()) {
+					if (field.getName().equalsIgnoreCase(nameField.name())) {		
+						field.setAccessible(true);
+						fieldValue = field.get(model).toString();					
+						field.setAccessible(false);
+						
+						break;
+					}
 				}
-			}
 			
-			for (String value: values) {
+				if (fieldValue.isEmpty()) {
+					Assert.fail("Não foi possível encontrar o field " + nameField.name() + " mapeado no model " + model.getClass().getSimpleName());
+				}
+			
 				if (fieldValue.equalsIgnoreCase(value)){
-					continue modelList;
+					continue sheetList;
 				}
 			}
 			
-			Assert.fail("O valor " + fieldValue + " não foi encontrado na base de dados.");
+			Assert.fail("O valor " + value + " não foi encontrado na base de dados.");
 		}
+	}
+	
+	/**
+	 * Método genérico para validação do code no banco de dados
+	 * @param table
+	 * @param model
+	 * @param sheet
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws IOException
+	 * @throws NotFoundColumnException
+	 */
+	public default void validateCode(TableDefault table, Model model, SheetDefault sheet) throws IllegalArgumentException, IllegalAccessException, IOException, NotFoundColumnException {
+		validateFieldTable(table, model, EnumNameFieldModel.CODE, ProcTemplate.getFieldSheet(sheet, EnumNameFieldSheet.CODE));
+	}
+	
+	/**
+	 * Método genérico para validação do valor no banco de dados
+	 * @param table
+	 * @param model
+	 * @param sheet
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws NotFoundColumnException
+	 * @throws IOException
+	 */
+	public default void validateValue(TableDefault table, Model model, SheetDefault sheet) throws IllegalArgumentException, IllegalAccessException, NotFoundColumnException, IOException {
+		validateFieldTable(table, model, EnumNameFieldModel.VALUE, ProcTemplate.getFieldSheet(sheet, EnumNameFieldSheet.VALUE));
+	}
+	
+	/**
+	 * Método genérico para validação do name no banco de dados
+	 * @param table Implementação da fachada 
+	 * @param model Implementação do model mapeado com a tabela no banco de dados
+	 * @param sheet Implementação da planilha 
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws NotFoundColumnException
+	 * @throws IOException
+	 */
+	public default void validateName(TableDefault table, Model model, SheetDefault sheet) throws IllegalArgumentException, IllegalAccessException, NotFoundColumnException, IOException {
+		validateFieldTable(table, model, EnumNameFieldModel.TABLENAME, ProcTemplate.getFieldSheet(sheet, EnumNameFieldSheet.NAME));
 	}
 	
 	/**
