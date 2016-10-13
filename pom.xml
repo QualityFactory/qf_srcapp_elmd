@@ -110,10 +110,23 @@
 	</dependency>
 	
 	<dependency>
-  		<groupId>com.google.guava</groupId>
-  		<artifactId>guava</artifactId>
-  		<version>19.0</version>
+    	<groupId>jboss</groupId>
+    	<artifactId>jboss-client</artifactId>
+    	<version>4.0.2</version>
+	</dependency>
+
+	<dependency>
+		<groupId>org.jboss.ejb3</groupId>
+  		<artifactId>jboss-ejb3-common</artifactId>
+  		<version>1.0.4</version>
 	</dependency>
 	
+	<dependency>
+  		<groupId>org.wildfly</groupId>
+  		<artifactId>wildfly-ejb-client-bom</artifactId>
+  		<version>8.0.0.Final</version>
+  		<type>pom</type>
+  		<scope>compile</scope>
+	</dependency>
   </dependencies>
 </project>
