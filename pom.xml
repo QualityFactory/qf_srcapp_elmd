@@ -25,6 +25,8 @@
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
+          <fork>true</fork>
+          <executable>C:\Program Files\Java\jdk1.8.0_65\bin\javac.exe</executable>
         </configuration>
       </plugin>
       <plugin>
@@ -58,12 +60,6 @@
 	    <groupId>junit</groupId>
 	    <artifactId>junit</artifactId>
 	    <version>4.8.1</version>
-	</dependency>
-	
-	<dependency>
-	    <groupId>org.mockito</groupId>
-	    <artifactId>mockito-all</artifactId>
-	    <version>1.9.5</version>
 	</dependency>
 	
 	<dependency>
