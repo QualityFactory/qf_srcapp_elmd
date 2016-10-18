@@ -1,14 +1,23 @@
 package br.com.qualityfactory.el.elmd.test.ejb;
 
-import org.junit.Before;
+import java.util.Properties;
 
-import br.com.qualityfactory.el.elmd.ejb.util.TestUtil;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import org.junit.Test;
+
+import br.com.qualityfactory.el.elmd.adjective.AdjectiveImpl;
+import br.com.qualityfactory.el.elmd.model.AdjectiveModel;
 
 public class ConnectionTest {
 	
-	@Before
-	public void init(){
-		TestUtil.initTest(this);
+	@Test
+	public void doLookup() throws NamingException{
+		InitialContext.doLookup("java:global/qf_srcapp_elmd/AdjectiveImpl!br.com.qualityfactory.el.elmd.adjective.AdjectiveLocal");
+		//InitialContext initialContext = new InitialContext();
+		//initialContext.bind("java:global/a", 100);
 	}
 	
 	
