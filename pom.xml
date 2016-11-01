@@ -1,131 +1,49 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.4.1.RELEASE</version>
+  </parent>
   <groupId>br.com.qualityfactory.el</groupId>
   <artifactId>elmd</artifactId>
   <version>0.0.1</version>
-  <packaging>ejb</packaging>
-  <name>EnglishLabModel</name>
-  <build>
-    <sourceDirectory>src</sourceDirectory>
-    <resources>
-      <resource>
-        <directory>src</directory>
-        <excludes>
-          <exclude>**/*.java</exclude>
-        </excludes>
-      </resource>
-      <resource>
-      	<directory>resources</directory>
-      </resource>
-    </resources>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.3</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-ejb-plugin</artifactId>
-        <version>2.5</version>
-        <configuration>
-          <ejbVersion>3.2</ejbVersion>
-          <archive>
-          	<manifest>
-          		<addClasspath>true</addClasspath>
-            </manifest>
-          </archive>
-          <generateClient>true</generateClient>
-          <clientExcludes>
-          	<clientExclude>br/com/qualityfactory/el/elmd/**/*Impl.class</clientExclude>
-          	<clientExclude>br/com/qualityfactory/el/elmd/ejb/factory/*.class</clientExclude>
-          </clientExcludes>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+  
+  <properties>
+  	<java.version>1.8</java.version>
+  </properties>
+  
   <dependencies>
   	<dependency>
-	   	<groupId>org.mockito</groupId>
-	   	<artifactId>mockito-all</artifactId>
-	   	<version>1.9.5</version>
-	</dependency>
-	
-	<dependency>
-	    <groupId>javax.ejb</groupId>
-	    <artifactId>ejb-api</artifactId>
-	    <version>3.0</version>
-	</dependency>
-	
-	<dependency>
-	    <groupId>junit</groupId>
-	    <artifactId>junit</artifactId>
-	    <version>4.8.1</version>
-	</dependency>
-	
-	<dependency>
-	    <groupId>org.hibernate.javax.persistence</groupId>
-	    <artifactId>hibernate-jpa-2.0-api</artifactId>
-	    <version>1.0.1.Final</version>
-	</dependency>
-	
-	<dependency>
-	    <groupId>javax</groupId>
-	    <artifactId>javaee-api</artifactId>
-	    <version>7.0</version>
-	</dependency>
-	
-	<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.16.10</version>
-			<scope>provided</scope>
-	</dependency>
-	
-	<dependency>
-	    <groupId>javax.enterprise</groupId>
-	    <artifactId>cdi-api</artifactId>
-	    <version>1.2</version>
-	</dependency>
-	
-	<dependency>
-    	<groupId>org.hibernate</groupId>
-    	<artifactId>hibernate-entitymanager</artifactId>
-    	<version>5.2.2.Final</version>
-	</dependency>
-	
-	<dependency>
-    	<groupId>postgresql</groupId>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework.boot</groupId>
+    	<artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+    	<groupId>org.postgresql</groupId>
     	<artifactId>postgresql</artifactId>
-    	<version>9.3-1102.jdbc41</version>
-	</dependency>
-	
-	<dependency>
-        <groupId>org.apache.poi</groupId>
-        <artifactId>poi-ooxml</artifactId>
-        <version>3.11-beta2</version>
-	</dependency>
-	
-	<dependency>
-    	<groupId>jboss</groupId>
-    	<artifactId>jboss-client</artifactId>
-    	<version>4.0.2</version>
-	</dependency>
-
-	<dependency>
-		<groupId>org.jboss.ejb3</groupId>
-  		<artifactId>jboss-ejb3-common</artifactId>
-  		<version>1.0.4</version>
-	</dependency>
-	
-	<dependency>
-  		<groupId>org.wildfly</groupId>
-  		<artifactId>wildfly-ejb-client-bom</artifactId>
-  		<version>8.0.0.Final</version>
-  		<type>pom</type>
-  		<scope>compile</scope>
-	</dependency>
+    	<scope>runtime</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework.boot</groupId>
+    	<artifactId>spring-boot-starter-test</artifactId>
+    	<scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.projectlombok</groupId>
+    	<artifactId>lombok</artifactId>
+    	</dependency>
   </dependencies>
+  
+  <build>
+  	<plugins>
+  		<plugin>
+  			<groupId>org.springframework.boot</groupId>
+  			<artifactId>spring-boot-maven-plugin</artifactId>
+  		</plugin>
+  	</plugins>
+  </build>
 </project>
