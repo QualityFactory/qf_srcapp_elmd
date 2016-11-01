@@ -6,3 +6,4 @@
 /target/
 /bin/
 *_.java
+*.class
