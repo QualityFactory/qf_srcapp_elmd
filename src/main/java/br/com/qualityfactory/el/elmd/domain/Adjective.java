@@ -5,11 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.Data;
 
 @Data
-@Entity(name = "adjective")
+@Entity
+@Table(name = "adjective")
 public class Adjective implements Model {
 
 	private static final long serialVersionUID = 1L;
