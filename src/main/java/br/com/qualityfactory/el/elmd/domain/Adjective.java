@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "adjective")
-public class Adjective implements Model {
+public class Adjective implements Model{
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,7 +22,4 @@ public class Adjective implements Model {
 
 	@Column(nullable = false, unique = true)
 	private String code;
-
-	@Column(name = "val", nullable = false, unique = true)
-	private String value;
 }
