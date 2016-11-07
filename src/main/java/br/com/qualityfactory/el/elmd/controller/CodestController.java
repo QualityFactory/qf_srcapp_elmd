@@ -30,22 +30,6 @@ public class CodestController {
 	@Post("/listAll")
 	@Consumes("application/json")
 	public void listAll(Request request) {	 
-		 /*Codest codest = new Codest();
-		 codest.setCode("34242r23432342");
-		 codest.setId((short)21);
-		 codest.setTableName("adjective");
-		 
-		 List<Model> ls = new ArrayList<>();
-		 ls.add(codest);
-		 
-		 Token token = new Token();
-		 token.setKey(UUID.randomUUID().toString());
-		 
-		 Response response = new Response();
-		 
-		 response.setToken(token);
-		 response.setResponse(ls);*/
-		 
 		 Response response = new Response();
 		 
 		 Token token = new Token();

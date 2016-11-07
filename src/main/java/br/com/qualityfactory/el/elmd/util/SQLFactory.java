@@ -41,7 +41,7 @@ public class SQLFactory {
 
 	private static Collection<Model> doSelect(CriteriaQuery<Model> query, Root<Model> variableRoot) {
 		query.select(variableRoot);
-		return (Collection<Model>) manager.createQuery(query).getResultList();
+		return (Collection<Model>) getManager().createQuery(query).getResultList();
 	}
 
 	private static EntityManager getManager() {
