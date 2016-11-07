@@ -1,4 +1,4 @@
-package br.com.qualityfactory.el.elmd.domain;
+ package br.com.qualityfactory.el.elmd.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
