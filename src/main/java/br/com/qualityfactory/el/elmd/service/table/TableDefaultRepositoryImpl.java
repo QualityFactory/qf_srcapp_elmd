@@ -1,13 +1,19 @@
 package br.com.qualityfactory.el.elmd.service.table;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import br.com.qualityfactory.el.elmd.domain.Model;
+import br.com.qualityfactory.el.elmd.util.BusinessUtil;
 import br.com.qualityfactory.el.elmd.util.SQLFactory;
 
 class TableDefaultRepositoryImpl implements TableDefaultRepository {
@@ -15,11 +21,44 @@ class TableDefaultRepositoryImpl implements TableDefaultRepository {
 	@PersistenceContext
 	private EntityManager manager; 
 	
-
 	@Override
 	public Collection<Model> listAllModels(Model model) {
 		CriteriaQuery<Model> query = SQLFactory.getQuery(manager, model);
 		return doSelect(query, doFrom(model, query));
+	}
+	
+	@Override
+	public Model findModelByParam(Model model) {
+		Model modelFound = null;
+		
+		try {
+			CriteriaBuilder builder = manager.getCriteriaBuilder();
+			Collection<Field> fields = BusinessUtil.getFieldsModel(model);
+			CriteriaQuery<Model> query = SQLFactory.getQuery(manager, model);
+			Root<Model> variableRoot = doFrom(model, query);
+			
+			for (Field field: fields) {
+				for (Annotation annotation: field.getDeclaredAnnotations()) {
+					if (annotation.annotationType().isAssignableFrom(Column.class)){
+						String annotationValue = annotation.toString();
+						
+					}
+				}
+				
+				query.select(variableRoot).where(builder.equal(variableRoot.get(field.getName()), field.get(model)));
+			}
+			
+			modelFound = manager.createQuery(query).getSingleResult();
+			
+		} catch (NoResultException noResultException) {
+			//throw exception
+			return modelFound;
+		} catch ( IllegalArgumentException | IllegalAccessException e) {
+			//throw exception
+			return modelFound;
+		}
+		
+		return modelFound;
 	}
 
 	private Collection<Model> doSelect(CriteriaQuery<Model> query, Root<Model> variableRoot) {

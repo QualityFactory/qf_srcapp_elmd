@@ -12,4 +12,11 @@ public interface TableDefaultService {
 	 */
 	public Collection<Model> listAll(Model model);
 	
+	/**
+	 * Return a model that was found in the search on database
+	 * @param model Model with the params for parameterized of search 
+	 * @return Return a model found
+	 */
+	public Model findByParam(Model model);
+	
 }

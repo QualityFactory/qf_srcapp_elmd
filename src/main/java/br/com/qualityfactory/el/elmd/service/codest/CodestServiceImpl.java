@@ -15,4 +15,9 @@ public class CodestServiceImpl implements CodestService {
 	public Collection<Model> listAll() {
 		return repository.listAllCodest();
 	}
+	
+	@Override
+	public Model findByTableName(String tableName) {
+		return repository.findByTableName(tableName);
+	}
 }

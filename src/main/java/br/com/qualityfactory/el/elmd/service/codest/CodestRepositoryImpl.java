@@ -17,4 +17,12 @@ class CodestRepositoryImpl implements CodestRespository {
 	public Collection<Model> listAllCodest() {
 		return tableService.listAll(new Codest());
 	}
+	
+	@Override
+	public Model findByTableName(String tableName) {
+		Codest codestModel = new Codest();
+		codestModel.setTableName(tableName);
+		
+		return tableService.findByParam(codestModel);
+	}
 }

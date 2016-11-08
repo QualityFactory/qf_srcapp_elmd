@@ -7,4 +7,8 @@ import br.com.qualityfactory.el.elmd.domain.Model;
 interface TableDefaultRepository {
 	
 	Collection<Model> listAllModels(Model model);
+	
+	Model findModelByParam(Model model);
+	
+	
 }

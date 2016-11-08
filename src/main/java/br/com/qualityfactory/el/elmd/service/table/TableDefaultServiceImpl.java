@@ -10,9 +10,14 @@ public class TableDefaultServiceImpl implements TableDefaultService {
 
 	@Inject
 	private TableDefaultRepository repository;
-	
+
 	@Override
 	public Collection<Model> listAll(Model model) {
 		return repository.listAllModels(model);
+	}
+
+	@Override
+	public Model findByParam(Model model) {
+		return repository.findModelByParam(model);
 	}
 }

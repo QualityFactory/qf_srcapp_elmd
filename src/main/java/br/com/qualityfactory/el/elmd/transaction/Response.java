@@ -13,4 +13,5 @@ public class Response implements Serializable{
 
 	private Token token;
 	private List<Model> response;
+	private Message message;
 }

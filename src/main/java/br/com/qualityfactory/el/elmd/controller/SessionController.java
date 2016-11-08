@@ -10,9 +10,9 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.view.Results;
-import br.com.qualityfactory.el.elmd.transaction.Request;
 import br.com.qualityfactory.el.elmd.transaction.Response;
 import br.com.qualityfactory.el.elmd.transaction.Token;
+import br.com.qualityfactory.el.elmd.transaction.request.SessionRequest;
 
 @Controller
 @Path("/session")
@@ -21,16 +21,14 @@ public class SessionController {
 	@Inject
 	private Result result;
 	
-	@Post("/openSession")
+	@Post("open")
 	@Consumes("application/json")
-	public void openSession(Request request) {
+	public void openSession(SessionRequest request) {
 		 Token token = new Token();
 		 token.setKey(UUID.randomUUID().toString());
 		 
 		 Response response = new Response();
-		 
 		 response.setToken(token);
-		 response.setResponse(null);
 		 
 		 result.use(Results.json()).withoutRoot().from(response).include("response").recursive().serialize();
 	}
