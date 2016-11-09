@@ -43,23 +43,18 @@ public class CodestController {
 		result.use(Results.json()).withoutRoot().from(response).include("response").recursive().serialize();
 	}
 
-	@Post("getCodestByName")
+	@Post("doFilter")
 	@Consumes("application/json")
-	public void findByName(CodestRequest request) {
+	public void findCodestWithArguments(CodestRequest request) {
 		Response response = new Response();
 		
 		Token token = new Token();
 		token.setKey(UUID.randomUUID().toString());
 		
-		if (request.getCodest().getTableName() == null || request.getCodest().getTableName().isEmpty()) {
-			//throw exception
-			result.use(Results.json()).withoutRoot().from("request.model.tableName required").serialize();
-			return;
-		}
-		
-		response.setResponse(Lists.newArrayList(service.findByTableName(request.getCodest().getTableName())));
+		response.setResponse(Lists.newArrayList(service.findWithArguments(request.getCodest())));
 		response.setToken(token);
 		
 		result.use(Results.json()).withoutRoot().from(response).include("response").recursive().serialize();
 	}
+
 }

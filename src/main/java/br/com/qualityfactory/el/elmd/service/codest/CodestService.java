@@ -2,6 +2,7 @@ package br.com.qualityfactory.el.elmd.service.codest;
 
 import java.util.Collection;
 
+import br.com.qualityfactory.el.elmd.domain.Codest;
 import br.com.qualityfactory.el.elmd.domain.Model;
 
 public interface CodestService {
@@ -17,5 +18,5 @@ public interface CodestService {
 	 * @param tableName name of table
 	 * @return Return the model found
 	 */
-	public Model findByTableName(String tableName);
+	public Model findWithArguments(Codest codest);
 }

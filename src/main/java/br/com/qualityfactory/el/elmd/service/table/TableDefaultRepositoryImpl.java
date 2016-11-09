@@ -1,10 +1,8 @@
 package br.com.qualityfactory.el.elmd.service.table;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Collection;
 
-import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -38,13 +36,6 @@ class TableDefaultRepositoryImpl implements TableDefaultRepository {
 			Root<Model> variableRoot = doFrom(model, query);
 			
 			for (Field field: fields) {
-				for (Annotation annotation: field.getDeclaredAnnotations()) {
-					if (annotation.annotationType().isAssignableFrom(Column.class)){
-						String annotationValue = annotation.toString();
-						
-					}
-				}
-				
 				query.select(variableRoot).where(builder.equal(variableRoot.get(field.getName()), field.get(model)));
 			}
 			

@@ -19,10 +19,7 @@ class CodestRepositoryImpl implements CodestRespository {
 	}
 	
 	@Override
-	public Model findByTableName(String tableName) {
-		Codest codestModel = new Codest();
-		codestModel.setTableName(tableName);
-		
-		return tableService.findByParam(codestModel);
+	public Model findWithArguments(Model model) {
+		return tableService.findByParam(model);
 	}
 }
