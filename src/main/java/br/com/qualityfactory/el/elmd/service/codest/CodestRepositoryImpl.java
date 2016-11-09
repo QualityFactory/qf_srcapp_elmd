@@ -19,7 +19,7 @@ class CodestRepositoryImpl implements CodestRespository {
 	}
 	
 	@Override
-	public Model findWithArguments(Model model) {
-		return tableService.findByParam(model);
+	public Model findWithArguments(Codest codest) {
+		return tableService.findByParam(codest);
 	}
 }

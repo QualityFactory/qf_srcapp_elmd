@@ -30,7 +30,7 @@ class TableDefaultRepositoryImpl implements TableDefaultRepository {
 		Model modelFound = null;
 		
 		try {
-			CriteriaBuilder builder = manager.getCriteriaBuilder();
+			CriteriaBuilder builder = SQLFactory.getBuilder(manager);
 			Collection<Field> fields = BusinessUtil.getFieldsModel(model);
 			CriteriaQuery<Model> query = SQLFactory.getQuery(manager, model);
 			Root<Model> variableRoot = doFrom(model, query);

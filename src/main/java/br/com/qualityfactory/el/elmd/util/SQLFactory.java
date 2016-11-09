@@ -15,7 +15,7 @@ public class SQLFactory {
 		return (CriteriaQuery<Model>) getBuilder(manager).createQuery(model.getClass());
 	}
 
-	private static CriteriaBuilder getBuilder(EntityManager manager) {
+	public static CriteriaBuilder getBuilder(EntityManager manager) {
 		if (builder == null) {
 			builder = manager.getCriteriaBuilder();
 		}
