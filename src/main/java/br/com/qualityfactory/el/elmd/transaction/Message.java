@@ -6,5 +6,15 @@ import lombok.Data;
 @Data
 public class Message {
 	private EnumMessageType messageType;
+
+	/**
+	 * Exception name
+	 */
+	private String exception;
+
+	/**
+	 * Original exception name
+	 */
+	private String originalException;
 	private String value;
 }

@@ -14,7 +14,11 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.view.Results;
 import br.com.qualityfactory.el.elmd.domain.Model;
+import br.com.qualityfactory.el.elmd.enums.EnumMessageType;
+import br.com.qualityfactory.el.elmd.exception.ArchitectureProcessELException;
+import br.com.qualityfactory.el.elmd.exception.DataBaseELException;
 import br.com.qualityfactory.el.elmd.service.codest.CodestService;
+import br.com.qualityfactory.el.elmd.transaction.Message;
 import br.com.qualityfactory.el.elmd.transaction.Response;
 import br.com.qualityfactory.el.elmd.transaction.Token;
 import br.com.qualityfactory.el.elmd.transaction.request.CodestRequest;
@@ -29,7 +33,7 @@ public class CodestController {
 	@Inject
 	private CodestService service;
 
-	@Post("getCodests")
+	@Post("listAll")
 	@Consumes("application/json")
 	public void listAll(CodestRequest request) {
 		Response response = new Response();
@@ -43,18 +47,34 @@ public class CodestController {
 		result.use(Results.json()).withoutRoot().from(response).include("response").recursive().serialize();
 	}
 
-	@Post("doFilter")
+	@Post("findByParameter")
 	@Consumes("application/json")
 	public void findCodestWithArguments(CodestRequest request) {
 		Response response = new Response();
-		
+
 		Token token = new Token();
 		token.setKey(UUID.randomUUID().toString());
-		
-		response.setResponse(Lists.newArrayList(service.findWithArguments(request.getCodest())));
+		Message message = new Message();
+
+		try {
+			Model model = service.findWithArguments(request.getCodest());
+			message.setMessageType(EnumMessageType.SUCCESS);
+			response.setResponse(Lists.newArrayList(model));
+		} catch (DataBaseELException dataBaseELException) {
+			message.setMessageType(EnumMessageType.ALERT);
+			message.setException(dataBaseELException.getClass().getSimpleName());
+			message.setValue(dataBaseELException.getMessage());
+			message.setOriginalException(dataBaseELException.getOriginalException().getClass().getSimpleName());
+		} catch (ArchitectureProcessELException architectureProcessELException) {
+			message.setMessageType(EnumMessageType.ERROR);
+			message.setValue(architectureProcessELException.getMessage());
+			message.setException(architectureProcessELException.getClass().getSimpleName());
+			message.setOriginalException(architectureProcessELException.getOriginalException().getClass().getSimpleName());
+		}
+
+		response.setMessage(message);
 		response.setToken(token);
-		
+
 		result.use(Results.json()).withoutRoot().from(response).include("response").recursive().serialize();
 	}
-
 }

@@ -6,6 +6,8 @@ import javax.inject.Inject;
 
 import br.com.qualityfactory.el.elmd.domain.Codest;
 import br.com.qualityfactory.el.elmd.domain.Model;
+import br.com.qualityfactory.el.elmd.exception.ArchitectureProcessELException;
+import br.com.qualityfactory.el.elmd.exception.DataBaseELException;
 
 public class CodestServiceImpl implements CodestService {
 	
@@ -18,7 +20,7 @@ public class CodestServiceImpl implements CodestService {
 	}
 	
 	@Override
-	public Model findWithArguments(Codest codest) {
+	public Model findWithArguments(Codest codest) throws DataBaseELException, ArchitectureProcessELException {
 		return repository.findWithArguments(codest);
 	}
 }

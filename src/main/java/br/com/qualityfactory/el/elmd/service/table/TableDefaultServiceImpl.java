@@ -5,6 +5,8 @@ import java.util.Collection;
 import javax.inject.Inject;
 
 import br.com.qualityfactory.el.elmd.domain.Model;
+import br.com.qualityfactory.el.elmd.exception.ArchitectureProcessELException;
+import br.com.qualityfactory.el.elmd.exception.DataBaseELException;
 
 public class TableDefaultServiceImpl implements TableDefaultService {
 
@@ -17,7 +19,7 @@ public class TableDefaultServiceImpl implements TableDefaultService {
 	}
 
 	@Override
-	public Model findByParam(Model model) {
+	public Model findByParam(Model model) throws DataBaseELException, ArchitectureProcessELException {
 		return repository.findModelByParam(model);
 	}
 }

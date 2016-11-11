@@ -11,6 +11,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import br.com.qualityfactory.el.elmd.domain.Model;
+import br.com.qualityfactory.el.elmd.exception.ArchitectureProcessELException;
+import br.com.qualityfactory.el.elmd.exception.DataBaseELException;
 import br.com.qualityfactory.el.elmd.util.BusinessUtil;
 import br.com.qualityfactory.el.elmd.util.SQLFactory;
 
@@ -26,7 +28,7 @@ class TableDefaultRepositoryImpl implements TableDefaultRepository {
 	}
 	
 	@Override
-	public Model findModelByParam(Model model) {
+	public Model findModelByParam(Model model) throws DataBaseELException, ArchitectureProcessELException {
 		Model modelFound = null;
 		
 		try {
@@ -42,11 +44,9 @@ class TableDefaultRepositoryImpl implements TableDefaultRepository {
 			modelFound = manager.createQuery(query).getSingleResult();
 			
 		} catch (NoResultException noResultException) {
-			//throw exception
-			return modelFound;
-		} catch ( IllegalArgumentException | IllegalAccessException e) {
-			//throw exception
-			return modelFound;
+			throw new DataBaseELException(noResultException);
+		} catch ( IllegalArgumentException | IllegalAccessException illegalException) {
+			throw new ArchitectureProcessELException(illegalException);
 		}
 		
 		return modelFound;
