@@ -1,27 +1,20 @@
 package br.com.qualityfactory.el.elmd.controller;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-import javax.inject.Inject;
+import javax.inject.*;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.*;
 
-import br.com.caelum.vraptor.Consumes;
-import br.com.caelum.vraptor.Controller;
-import br.com.caelum.vraptor.Path;
-import br.com.caelum.vraptor.Post;
-import br.com.caelum.vraptor.Result;
-import br.com.caelum.vraptor.view.Results;
-import br.com.qualityfactory.el.elmd.domain.Model;
-import br.com.qualityfactory.el.elmd.enums.EnumMessageType;
-import br.com.qualityfactory.el.elmd.exception.ArchitectureProcessELException;
-import br.com.qualityfactory.el.elmd.exception.DataBaseELException;
-import br.com.qualityfactory.el.elmd.service.codest.CodestService;
-import br.com.qualityfactory.el.elmd.transaction.Message;
-import br.com.qualityfactory.el.elmd.transaction.Response;
-import br.com.qualityfactory.el.elmd.transaction.Token;
-import br.com.qualityfactory.el.elmd.transaction.request.CodestRequest;
+import br.com.caelum.vraptor.*;
+import br.com.caelum.vraptor.view.*;
+
+import br.com.qualityfactory.el.elifr.domain.*;
+import br.com.qualityfactory.el.elifr.exception.*;
+import br.com.qualityfactory.el.elifr.service.table.*;
+import br.com.qualityfactory.el.elifr.vo.request.*;
+import br.com.qualityfactory.el.elifr.vo.*;
+import br.com.qualityfactory.el.elifr.vo.enums.*;
 
 @Controller
 @Path("/codest")
@@ -30,8 +23,7 @@ public class CodestController {
 	@Inject
 	private Result result;
 
-	@Inject
-	private CodestService service;
+	private TableService service;
 
 	@Post("listAll")
 	@Consumes("application/json")
@@ -39,9 +31,9 @@ public class CodestController {
 		Response response = new Response();
 
 		Token token = new Token();
-		token.setKey(UUID.randomUUID().toString());
+		token.setKey(UUID.randomUUID().toString().getBytes());
 
-		response.setResponse((List<Model>) service.listAll());
+		response.setResponse(new ArrayList<>(service.getInstance().listAll(new Codest())));
 		response.setToken(token);
 
 		result.use(Results.json()).withoutRoot().from(response).include("response").recursive().serialize();
@@ -53,23 +45,23 @@ public class CodestController {
 		Response response = new Response();
 
 		Token token = new Token();
-		token.setKey(UUID.randomUUID().toString());
+		token.setKey(UUID.randomUUID().toString().getBytes());
 		Message message = new Message();
 
 		try {
-			Model model = service.findWithArguments(request.getCodest());
+			Model model = service.findByParam(request.getCodest());
 			message.setMessageType(EnumMessageType.SUCCESS);
 			response.setResponse(Lists.newArrayList(model));
 		} catch (DataBaseELException dataBaseELException) {
 			message.setMessageType(EnumMessageType.ALERT);
-			message.setException(dataBaseELException.getClass().getSimpleName());
+			message.setExceptionName(dataBaseELException.getClass().getSimpleName());
 			message.setValue(dataBaseELException.getMessage());
-			message.setOriginalException(dataBaseELException.getOriginalException().getClass().getSimpleName());
-		} catch (ArchitectureProcessELException architectureProcessELException) {
+			message.setOriginalExceptionName(dataBaseELException.getOriginalException().getClass().getSimpleName());
+		} catch (ArchitectureELException architectureProcessELException) {
 			message.setMessageType(EnumMessageType.ERROR);
 			message.setValue(architectureProcessELException.getMessage());
-			message.setException(architectureProcessELException.getClass().getSimpleName());
-			message.setOriginalException(architectureProcessELException.getOriginalException().getClass().getSimpleName());
+			message.setExceptionName(architectureProcessELException.getClass().getSimpleName());
+			message.setOriginalExceptionName(architectureProcessELException.getOriginalException().getClass().getSimpleName());
 		}
 
 		response.setMessage(message);
